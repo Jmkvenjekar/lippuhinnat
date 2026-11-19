@@ -14,14 +14,17 @@ AIKUINEN_HINTA = 15.0
 ELAKELAINEN_HINTA = 10.0
 RYHMAN_KOKO = 10
 RYHMA_ALENNUS = 0.10
+OPISKELIJA_HINTA = 10.0
 
 
-def lippuhinta(ika):
+def lippuhinta(ika, opiskelija=False):
     """Palauttaa yhden lipun hinnan euroina iän perusteella."""
     if ika < 0 or ika > 120:
         raise ValueError("Ikä on virheellinen")
     if ika < 7:
         return 0.0
+    if opiskelija:
+        return OPISKELIJA_HINTA
     if ika <= 17:
         return LAPSI_HINTA
     if ika < 65:
@@ -29,9 +32,12 @@ def lippuhinta(ika):
     return ELAKELAINEN_HINTA
 
 
-def kokonaishinta(iat):
+def kokonaishinta(iat, opiskelijat=None):
     """Palauttaa lippujen yhteishinnan euroina, ryhmäalennus huomioituna."""
-    summa = sum(lippuhinta(ika) for ika in iat)
+    if opiskelijat is None:
+        opiskelijat = [False] * len(iat)
+
+    summa = sum(lippuhinta(ika, opiskelija=opiskelija) for ika, opiskelija in zip(iat, opiskelijat))
     if len(iat) >= RYHMAN_KOKO:
         summa = summa * (1 - RYHMA_ALENNUS)
     return round(summa, 2)
