@@ -58,3 +58,6 @@ def test_kokonaishinta_10_aikuista():
 
 def test_opiskelija_hinta():
     assert lippuhinta(20, opiskeljia=True) == 10.0
+
+def test_kokonaishinta_opiskelijat():
+    assert kokonaishinta([20, 20, 30], opiskelijat=[True, True, False]) == 35.0
