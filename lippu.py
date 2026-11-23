@@ -23,7 +23,7 @@ def lippuhinta(ika, opiskelija=False):
         raise ValueError("Ikä on virheellinen")
     if ika < 7:
         return 0.0
-    if opiskelija:
+    if opiskelija and 18 <= ika <= 64:
         return OPISKELIJA_HINTA
     if ika <= 17:
         return LAPSI_HINTA
